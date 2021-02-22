@@ -1,0 +1,19 @@
+*,*::after,*::before{
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+html{
+    box-sizing: border-box;
+    // font-size: 62.5%;
+}
+body{
+    // font-size: 1.6rem;
+}
+
+.form-group{
+    margin-bottom: 15px;
+}
+.admin__form{
+}
+

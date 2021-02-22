@@ -1,0 +1,16 @@
+*, *::after, *::before {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+/*# sourceMappingURL=style.css.map */
