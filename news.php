@@ -3,8 +3,20 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
-$query = "SELECT * FROM news";
+$pagination = $_GET["id"] ?? 0;
+
+if($pagination == 0 || $pagination == 1){
+    $pagination = 0;
+}else{
+    $pagination = ($pagination*4)-4;
+}
+
+
+
+$query = "SELECT * FROM news LIMIT {$pagination}, 4";
 $result = mysqli_query($connection, $query);
+$paginationQuery = mysqli_query($connection, "SELECT * FROM news");
+
 
 ?>
 
@@ -55,18 +67,27 @@ $result = mysqli_query($connection, $query);
                             ?></td>
                         <td><?php echo $news["newsCatagories"] ?></td>
                         <td align="center"> <img src="<?php echo $news["newsThumbnail"] ?>" alt="News Image" height=80> </td>
-                        <td style="vertical-align:middle"
-                         ><a class="btn btn-secondary" href="newsUpdate.php?id=<?php echo $news["id"] ?>">Update</a></td>
+                        <td style="vertical-align:middle"><a class="btn btn-secondary" href="newsUpdate.php?id=<?php echo $news["id"] ?>">Update</a></td>
 
                     </tr>
 
             <?php
                 }
-            } ?>
+            }
+            ?>
+            <ul class="pagination">
+            <?php
+                $totalPagination = ceil(mysqli_num_rows($paginationQuery) / 4);
+                for ($i = 1; $i <= $totalPagination; $i++):
+                ?>
+
+                <li class="page-item"><a href="news.php?id=<?php echo $i;?>" class="page-link"><?php echo $i;?></a></li>
+            <?php
+                endfor;
+            ?>
 
 
-
-
+            </ul>
         </tbody>
 
     </table>
@@ -75,40 +96,6 @@ $result = mysqli_query($connection, $query);
 </div>
 
 
-<div class="modal fade" id="catagoriesmodal" tabindex="-1" aria-labelledby="catagoriesmodal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="catagoriesmodal">Add Catagories</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form name="catagoriesForm" action="functions.php" method="post">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="catagoireName">Catagorie Name:</label>
-                        <input type="text" name="catagoriesName" placeholder="Catagorie Name" class="form-control" id="catagoireName">
-                    </div>
-                    <div class="form-group">
-                        <label for="catagorieDescription">Catagorie Description:</label>
-                        <textarea class="form-control" name="catagorieDescription" placeholder="Description (Optional)" rows="5" id="catagorieDescription"></textarea>
-                    </div>
-                    <input type="hidden" name="action" value="addCatagorie">
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" value="Add Catagorie" class="btn btn-primary">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script>
-    document.querySelector(".catagoriesSubmit").addEventListener("click", function(e) {
-        if (document.forms["catagoriesForm"]["catagoriesName"].value == "") {
-            e.preventDefault();
-            alert("Catagorie Field Cannot Be Empty");
-        }
-    });
-</script>
 
 <?php require_once "include/footer.php"; ?>
