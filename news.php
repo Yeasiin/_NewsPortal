@@ -3,86 +3,111 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
-
+$query = "SELECT * FROM news";
+$result = mysqli_query($connection, $query);
 
 ?>
+
 <div class="col-md-10">
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-        <li class="breadcrumb-item active">News </li>
+        <li class="breadcrumb-item active "> News </li>
     </ul>
-    <form name="newsForm" enctype="multipart/form-data" action="functions.php" method="post">
-        <h2>Add News</h2>
-        <hr>
-        <div class="form-group">
-            <p class="text-danger">
-            <?php $statusCode = $_GET["status"] ?? "";
-                if($statusCode){
-                    echo getStatuscode($statusCode);
-                }
+    <div class="d-flex justify-content-end mt-5 ">
+
+        <a href="addNews.php" class="btn btn-primary">Add News</a>
+    </div>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"> Id </th>
+                <th scope="col">Title </th>
+                <th scope="col"> Description </th>
+                <th scope="col">Date</th>
+                <th scope="col"> Catagorie </th>
+                <th scope="col"> Thumbnail </th>
+                <th scope="col"> Action </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php if (mysqli_num_rows($result) < 1) {
             ?>
-            </p>
-            <label for="newsTitle">News Title:</label>
-            <input type="text" name="newsTitle" placeholder="Title..." class="form-control" id="newsTitle">
-        </div>
-        <div class="form-group">
-            <label for="newsDescription">News Body:</label>
-            <textarea class="form-control" name="newsDescription" placeholder="News Body..." rows="5" id="newsDescription"></textarea>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-6">
-                    <label for="formFile" class="form-label">Upload Image</label>
-                    <input class="form-control" name="newsImage" type="file" id="formFile">
-                </div>
-                <div class="col-6">
-                    <label for="formSelect" class="form-label">Select Catagories</label>
-                    <select id="formSelect" name="newsCatagories" class="form-select form-select-md" aria-label=".form-select-sm ">
-                        <option value=""> Select Catagories </option>
-                        <?php
-                        $newsCatagories = "SELECT * FROM catagories";
-                        $newsCatagoriesQuery = mysqli_query($connection, $newsCatagories);
-                        while ($newsCatagoriesResult = mysqli_fetch_assoc($newsCatagoriesQuery)) :
-                        ?>
-                            <option value="<?php echo "{$newsCatagoriesResult["id"]}" ?>"><?php echo "{$newsCatagoriesResult["catagories_name"]}" ?></option>
-                        <?php
-                        endwhile;
-                        ?>
-                    </select>
-                </div>
+                <tr>
+                    <td align="center" colspan="6">No News Found </td>
+                </tr>
 
-            </div>
-        </div>
+                <?php
+            } else {
+                $i = 0;
+                while ($news = mysqli_fetch_assoc($result)) {
+                    $i++;
+                ?>
+                    <tr>
+                        <td scope="row"> <?php echo $i; ?> </td>
+                        <td> <?php echo substr($news["newsTitle"], 0, 45); ?> </td>
+                        <td> <?php echo substr($news["newsDescription"], 0, 130); ?> </td>
+                        <td><?php echo
+                            date("F j, Y <br> g:i A", strtotime($news["createdAt"]));
+                            // $news["createdAt"]
+                            ?></td>
+                        <td><?php echo $news["newsCatagories"] ?></td>
+                        <td align="center"> <img src="<?php echo $news["newsThumbnail"] ?>" alt="News Image" height=80> </td>
+                        <td style="vertical-align:middle"
+                         ><a class="btn btn-secondary" href="newsUpdate.php?id=<?php echo $news["id"] ?>">Update</a></td>
 
-        <input type="hidden" name="action" value="addNews">
-        <input type="submit" value="Add News" class="btn btn-primary newsSubmit ">
-    </form>
+                    </tr>
+
+            <?php
+                }
+            } ?>
+
+
+
+
+        </tbody>
+
+    </table>
+
+
 </div>
 
 
+<div class="modal fade" id="catagoriesmodal" tabindex="-1" aria-labelledby="catagoriesmodal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catagoriesmodal">Add Catagories</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form name="catagoriesForm" action="functions.php" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="catagoireName">Catagorie Name:</label>
+                        <input type="text" name="catagoriesName" placeholder="Catagorie Name" class="form-control" id="catagoireName">
+                    </div>
+                    <div class="form-group">
+                        <label for="catagorieDescription">Catagorie Description:</label>
+                        <textarea class="form-control" name="catagorieDescription" placeholder="Description (Optional)" rows="5" id="catagorieDescription"></textarea>
+                    </div>
+                    <input type="hidden" name="action" value="addCatagorie">
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Add Catagorie" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-    document.querySelector(".newsSubmit").addEventListener("click", function(e) {
-        const newsTitle = document.forms["newsForm"]["newsTitle"].value;
-        const newsDescription = document.forms["newsForm"]["newsDescription"].value;
-        const newsCatagories = document.forms["newsForm"]["newsCatagories"].value;
-        const newsImage = document.forms["newsForm"]["newsImage"].value;
-
-        if (newsTitle == "") {
-            alert("News Title Can't Be Empty ");
+    document.querySelector(".catagoriesSubmit").addEventListener("click", function(e) {
+        if (document.forms["catagoriesForm"]["catagoriesName"].value == "") {
             e.preventDefault();
-        } else if (newsDescription == "") {
-            alert("News Description Can't Be Empty ");
-            e.preventDefault();
-
-        } else if (newsImage == "") {
-            alert("Select An Image");
-            e.preventDefault();
-        } else if (newsCatagories == "") {
-            alert("Select News Catagories");
-            e.preventDefault();
-
-        };
-
+            alert("Catagorie Field Cannot Be Empty");
+        }
     });
 </script>
 

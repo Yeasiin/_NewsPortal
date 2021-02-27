@@ -41,7 +41,7 @@ if ("login" == $action) {
     } else {
         header("location:catagories.php");
     }
-} elseif ("Update" == $action) {
+} elseif ("Update" == $action && "true" == $_POST["catagoriesUpdate"] ) {
     $catagorieName = htmlspecialchars($_POST["catagoriesName"]);
     $catagorieDescription = htmlspecialchars($_POST["catagorieDescription"]);
     $id = htmlspecialchars($_POST["id"]);
@@ -55,7 +55,7 @@ if ("login" == $action) {
     } else {
         header("location:catagories.php");
     }
-} elseif ("Delete" == $action) {
+} elseif ("Delete" == $action && "true" == $_POST["catagoriesUpdate"] ) {
     $id = htmlspecialchars($_POST["id"]);
     $query = "DELETE FROM catagories WHERE id=\"{$id}\" ";
     mysqli_query($connection, $query);
@@ -66,10 +66,10 @@ if ("login" == $action) {
         header("location:catagories.php");
     }
 } elseif ("addNews" == $action) {
-    $imagePermit = array("jpg","png","jpeg","gif");
-    $newsTitle = $_POST["newsTitle"];
-    $newsDescription = $_POST["newsDescription"];
-    $newsCatagories = $_POST["newsCatagories"];
+    $imagePermit = array("jpg", "png", "jpeg", "gif");
+    $newsTitle = htmlspecialchars($_POST["newsTitle"]);
+    $newsDescription = htmlspecialchars($_POST["newsDescription"]);
+    $newsCatagories = htmlspecialchars($_POST["newsCatagories"]);
 
     $fileName = $_FILES["newsImage"]["name"];
     $fileTmp = $_FILES["newsImage"]["tmp_name"];
@@ -77,22 +77,35 @@ if ("login" == $action) {
 
     $divide = explode(".", $fileName);
     $fileExtension = strtolower(end($divide));
-    $uniqueName = substr(md5(time()),0,10).'.'.$fileExtension;
+    $uniqueName = substr(md5(time()), 0, 10) . '.' . $fileExtension;
     $uploadImage = "Upload/image/$uniqueName";
 
-    if($fileSize > (3000*1024)){
+    if ($fileSize > (3000 * 1024)) {
         $statusCode = 7;
-    }elseif(in_array($fileExtension,$imagePermit) === false ){
+    } elseif (in_array($fileExtension, $imagePermit) === false) {
         $statusCode = 8;
     }
 
-    if(!file_exists("Upload/image")){
-        mkdir("Upload/image",0777,true);
+    if (!file_exists("Upload/image")) {
+        mkdir("Upload/image", 0777, true);
     };
-    if(!move_uploaded_file($fileTmp,$uploadImage)){
+    if (!move_uploaded_file($fileTmp, $uploadImage)) {
         $statusCode = 9;
+    } else {
+        $query = "INSERT INTO news( newsTitle, newsDescription, newsCatagories, newsThumbnail ) VALUES(
+            \"{$newsTitle}\",
+            \"{$newsDescription}\",
+            \"{$newsCatagories}\",
+            \"{$uploadImage}\") ";
+        mysqli_query($connection, $query);
+        $statusCode = 10;
     };
 
-    header("location:news.php?status={$statusCode}");
+    if (mysqli_connect_errno()) {
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        exit();
+    } else {
+        header("location:addNews.php?status={$statusCode}");
+    }
 
 };

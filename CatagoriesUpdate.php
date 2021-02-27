@@ -32,6 +32,7 @@ if($id){
         <textarea class="form-control" name="catagorieDescription" placeholder="Description (Optional)" rows="5" id="catagorieDescription"><?php echo $catagories["catagories_description"]; ?></textarea>
     </div>
     <input type="hidden" name="id" value="<?php echo $catagories["id"]; ?>" >
+    <input type="hidden" name="catagoriesUpdate" value="true" >
     <input type="submit" name="action" value="Update" class="btn btn-primary">
     <input type="submit" name="action" value="Delete" class="btn btn-danger">
 </form>
