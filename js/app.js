@@ -52,9 +52,6 @@ feather.replace();
 //   });
 // }
 
-document.querySelector(".catagoriesSubmit").addEventListener("click", function (e) {
-    if (document.forms["catagoriesForm"]["catagoriesName"].value == "") {
-      e.preventDefault();
-      alert("Catagorie Field Cannot Be Empty");
-    }
-  });
+
+
+

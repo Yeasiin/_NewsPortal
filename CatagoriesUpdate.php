@@ -21,7 +21,7 @@ if($id){
         <li class="breadcrumb-item active" > Update Catagories </li>
     </ul>
 <form name="catagoriesForm" action="functions.php" method="post">
-<h2 class="modal-title" id="catagoriesmodal">Update Catagories</h2>
+<h2>Update Catagories</h2>
 <hr>
     <div class="form-group">
         <label for="catagoireName">Catagorie Name:</label>

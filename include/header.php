@@ -1,5 +1,6 @@
 <?php
 require_once "DB/config.php";
+include_once "result.php";
 session_start();
 $session = $_SESSION["id"] ?? "";
 if (!$session) {

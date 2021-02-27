@@ -89,4 +89,14 @@ $result = mysqli_query($connection, $query);
         </div>
     </div>
 </div>
+
+<script>
+document.querySelector(".catagoriesSubmit").addEventListener("click", function (e) {
+    if (document.forms["catagoriesForm"]["catagoriesName"].value == "") {
+      e.preventDefault();
+      alert("Catagorie Field Cannot Be Empty");
+    }
+  });
+</script>
+
 <?php require_once "include/footer.php"; ?>
