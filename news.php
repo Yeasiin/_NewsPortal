@@ -4,6 +4,7 @@ $page = "news";
 require_once "include/navigation.php";
 
 $pagination = $_GET["id"] ?? 0;
+$paginationId = $_GET["id"] ?? 0;
 
 if($pagination == 0 || $pagination == 1){
     $pagination = 0;
@@ -75,7 +76,12 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
                 }
             }
             ?>
-            <ul class="pagination">
+            
+        </tbody>
+
+    </table>
+    <ul class="pagination">
+            <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="news.php?id=<?php echo $paginationId-1; ?>" class="page-link ">Previous</a></li>
             <?php
                 $totalPagination = ceil(mysqli_num_rows($paginationQuery) / 4);
                 for ($i = 1; $i <= $totalPagination; $i++):
@@ -85,12 +91,9 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
             <?php
                 endfor;
             ?>
-
+             <li class="page-item <?php echo $paginationId < $totalPagination ? "" : "disabled"; ?> "><a href="news.php?id=<?php echo $paginationId+1; ?>" class="page-link">Next</a></li>
 
             </ul>
-        </tbody>
-
-    </table>
 
 
 </div>
