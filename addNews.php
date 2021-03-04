@@ -32,11 +32,11 @@ require_once "include/navigation.php";
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 form-group">
                     <label for="formFile" class="form-label">Upload Image</label>
                     <input class="form-control" name="newsImage" type="file" id="formFile">
                 </div>
-                <div class="col-6">
+                <div class="col-6 form-group">
                     <label for="formSelect" class="form-label">Select Catagories</label>
                     <select id="formSelect" name="newsCatagories" class="form-select form-select-md" aria-label=".form-select-sm ">
                         <option value=""> Select Catagories </option>
@@ -51,7 +51,8 @@ require_once "include/navigation.php";
                         ?>
                     </select>
                 </div>
-                <div class="col-6">
+                
+                <div class="col-6 ">
                     <label for="createdBy" class="form-label">User Name</label>
                     <input type="text" class="form-control" name="createdBy" id="createdBy" value="<?php echo $_SESSION["name"]; ?>" disabled >
                 </div>

@@ -6,10 +6,10 @@ require_once "include/navigation.php";
 $pagination = $_GET["id"] ?? 0;
 $paginationId = $_GET["id"] ?? 0;
 
-if($pagination == 0 || $pagination == 1){
+if ($pagination == 0 || $pagination == 1) {
     $pagination = 0;
-}else{
-    $pagination = ($pagination*4)-4;
+} else {
+    $pagination = ($pagination * 4) - 4;
 }
 
 
@@ -31,9 +31,9 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
         <a href="addNews.php" class="btn btn-primary">Add News</a>
     </div>
     <?php $statusCode = $_GET["status"] ?? "";
-        if($statusCode){
-            echo getStatuscode($statusCode);
-        }
+    if ($statusCode) {
+        echo getStatuscode($statusCode);
+    }
     ?>
     <hr>
     <table class="table table-striped">
@@ -45,6 +45,7 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
                 <th scope="col">Date</th>
                 <th scope="col"> Catagorie </th>
                 <th scope="col"> Thumbnail </th>
+                <th scope="col"> Created By </th>
                 <th scope="col"> Action </th>
 
             </tr>
@@ -54,7 +55,7 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
             <?php if (mysqli_num_rows($result) < 1) {
             ?>
                 <tr>
-                    <td align="center" colspan="6">No News Found </td>
+                    <td align="center" colspan="8">No News Found </td>
                 </tr>
 
                 <?php
@@ -73,6 +74,7 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
                             ?></td>
                         <td><?php echo $news["newsCatagories"] ?></td>
                         <td align="center"> <img src="<?php echo $news["newsThumbnail"] ?>" alt="News Image" height=80> </td>
+                        <td align="center" style="vertical-align:middle"> <?php echo $news["createdBy"]; ?> </td>
                         <td style="vertical-align:middle"><a class="btn btn-secondary" href="newsUpdate.php?id=<?php echo $news["id"] ?>">Update</a></td>
 
                     </tr>
@@ -81,24 +83,24 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
                 }
             }
             ?>
-            
+
         </tbody>
 
     </table>
     <ul class="pagination">
-            <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="news.php?id=<?php echo $paginationId-1; ?>" class="page-link ">Previous</a></li>
-            <?php
-                $totalPagination = ceil(mysqli_num_rows($paginationQuery) / 4);
-                for ($i = 1; $i <= $totalPagination; $i++):
-                ?>
+        <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="news.php?id=<?php echo $paginationId - 1; ?>" class="page-link ">Previous</a></li>
+        <?php
+        $totalPagination = ceil(mysqli_num_rows($paginationQuery) / 4);
+        for ($i = 1; $i <= $totalPagination; $i++) :
+        ?>
 
-                <li class="page-item"><a href="news.php?id=<?php echo $i;?>" class="page-link"><?php echo $i;?></a></li>
-            <?php
-                endfor;
-            ?>
-             <li class="page-item <?php echo $paginationId < $totalPagination ? "" : "disabled"; ?> "><a href="news.php?id=<?php echo $paginationId+1; ?>" class="page-link">Next</a></li>
+            <li class="page-item"><a href="news.php?id=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a></li>
+        <?php
+        endfor;
+        ?>
+        <li class="page-item <?php echo $paginationId < $totalPagination ? "" : "disabled"; ?> "><a href="news.php?id=<?php echo $paginationId + 1; ?>" class="page-link">Next</a></li>
 
-            </ul>
+    </ul>
 
 </div>
 
