@@ -1,10 +1,10 @@
 <?php
 session_start();
+include_once "result.php";
 $session = $_SESSION["id"] ?? "";
 if($session){
     header("location: dashboard.php");
 }
-
 
 ?>
 
@@ -31,6 +31,13 @@ if($session){
                     <form class="admin__form w-100" action="functions.php" method="POST">
                         <h3 class="text-center ">Admin Login</h3>
                         <div class="form-group">
+                        <?php 
+                            $statusCode = $_GET["status"] ?? "";
+                            if($statusCode){
+                                echo getStatuscode($statusCode);
+                            }
+
+                        ?>
                             <label for="email">Email address:</label>
                             <input type="email" class="form-control" name="email" id="email">
                         </div>
@@ -38,9 +45,8 @@ if($session){
                             <label for="pwd">Password:</label>
                             <input type="password" class="form-control" name="password" id="pwd">
                         </div>
-                        <input type="hidden" name="adminLogin" value="submit">
                         <input type="hidden" name="action" value="login">
-                        <input type="submit" value="submit" class="btn btn-primary">
+                        <input type="submit" value="Submit" class="btn btn-primary">
                     </form>
 
                 </div>

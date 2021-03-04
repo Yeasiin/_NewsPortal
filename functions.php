@@ -2,6 +2,8 @@
 require_once "DB/config.php";
 session_start();
 $action = $_POST["action"] ?? "";
+$updateAction = $_POST["updateAction"] ?? "";
+
 $statusCode = "";
 
 if ("login" == $action) {
@@ -18,9 +20,13 @@ if ("login" == $action) {
             $_SESSION["name"] = $data["name"];
             header("location:dashboard.php");
             die();
+        } else {
+            $statusCode = 2;
         };
+    } else {
+        $statusCode = 1;
     }
-    header("location:adminLogin.php");
+    header("location:adminLogin.php?status={$statusCode}");
 } elseif ("addCatagorie" == $action) {
     $catagorieName = htmlspecialchars(trim($_POST["catagoriesName"]));
     $catagorieDescription = htmlspecialchars($_POST["catagorieDescription"]);
@@ -32,16 +38,13 @@ if ("login" == $action) {
 
         $query = "INSERT INTO catagories (catagories_name , catagories_description) VALUES(\"$catagorieName\" ,\"$catagorieDescription\")";
         $result = mysqli_query($connection, $query);
+        $statusCode = 13;
         if (mysqli_connect_errno()) {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-            exit();
-        } else {
-            header("location:catagories.php");
+            $statusCode = 9;
         }
-    } else {
-        header("location:catagories.php");
     }
-} elseif ("Update" == $action && "true" == $_POST["catagoriesUpdate"] ) {
+    header("location:catagories.php?status={$statusCode}");
+} elseif ("Update" == $action && "catagoriesUpdate" == $updateAction) {
     $catagorieName = htmlspecialchars($_POST["catagoriesName"]);
     $catagorieDescription = htmlspecialchars($_POST["catagorieDescription"]);
     $id = htmlspecialchars($_POST["id"]);
@@ -49,22 +52,20 @@ if ("login" == $action) {
     $query = "UPDATE catagories
     SET catagories_name=\"{$catagorieName}\", catagories_description=\"{$catagorieDescription}\" WHERE id={$id}";
     $result = mysqli_query($connection, $query);
+    $statusCode = 14 ;
     if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        exit();
-    } else {
-        header("location:catagories.php");
+        $statusCode = 9;
     }
-} elseif ("Delete" == $action && "true" == $_POST["catagoriesUpdate"] ) {
+    header("location:catagories.php?status={$statusCode}");
+} elseif ("Delete" == $action && "catagoriesUpdate" == $updateAction) {
     $id = htmlspecialchars($_POST["id"]);
     $query = "DELETE FROM catagories WHERE id=\"{$id}\" ";
     mysqli_query($connection, $query);
+    $statusCode = 15;
     if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        exit();
-    } else {
-        header("location:catagories.php");
+        $statusCode = 9;
     }
+    header("location:catagories.php?status={$statusCode}");
 } elseif ("addNews" == $action) {
     $imagePermit = array("jpg", "png", "jpeg", "gif");
     $newsTitle = htmlspecialchars($_POST["newsTitle"]);
@@ -102,10 +103,34 @@ if ("login" == $action) {
     };
 
     if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        $statusCode = 9;
+    }
+    header("location:news.php?status={$statusCode}");
+} elseif ("Update" == $action && "newsUpdate" == $updateAction) {
+    $newsTitle = htmlspecialchars($_POST["newsTitle"]);
+    $newsDescription = htmlspecialchars($_POST["newsDescription"]);
+    // $newsCatagories = htmlspecialchars($_POST["newsCatagories"]);
+    $newsId = htmlspecialchars($_POST["id"]);
+
+    $query = "UPDATE news SET newsTitle=\"{$newsTitle}\", newsDescription=\"{$newsDescription}\" WHERE id=\"{$newsId}\" ";
+
+    $result = mysqli_query($connection, $query);
+    $statusCode = 11;
+
+    if (mysqli_connect_errno()) {
+        echo "Failed To Connect to Mysql: " . mysqli_connect_error();
         exit();
     } else {
-        header("location:addNews.php?status={$statusCode}");
+        header("location: news.php?status={$statusCode}");
     }
-
+} elseif ("Delete" == $action && "newsUpdate" == $updateAction) {
+    $newsId = htmlspecialchars($_POST["id"]);
+    $query = "DELETE FROM news WHERE id=\"{$newsId}\" ";
+    mysqli_query($connection, $query);
+    if (mysqli_connect_errno()) {
+        $statusCode = 9;
+    } else {
+        $statusCode = 12;
+    }
+    header("location:news.php?status={$statusCode}");
 };

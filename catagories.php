@@ -3,7 +3,7 @@ require_once "include/header.php";
 $page = "catagories";
 require_once "include/navigation.php";
 
-$query = "SELECT * FROM catagories";
+$query = "SELECT * FROM catagories ORDER BY id DESC";
 $result = mysqli_query($connection, $query);
 ?>
 <div class="col-md-10">
@@ -12,11 +12,16 @@ $result = mysqli_query($connection, $query);
         <li class="breadcrumb-item active "> Catagories </li>
     </ul>
     <div class="d-flex justify-content-end mt-5 ">
-
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#catagoriesmodal">
             Add Catagorie
         </button>
     </div>
+    <?php
+        $statusCode = $_GET["status"] ?? "";
+        if($statusCode){
+            echo getStatuscode($statusCode);
+        }
+    ?>
     <hr>
     <table class="table table-striped">
         <thead>

@@ -14,7 +14,7 @@ if($pagination == 0 || $pagination == 1){
 
 
 
-$query = "SELECT * FROM news LIMIT {$pagination}, 4";
+$query = "SELECT * FROM news ORDER BY createdAt DESC LIMIT {$pagination}, 4";
 $result = mysqli_query($connection, $query);
 $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
 
@@ -30,6 +30,11 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
 
         <a href="addNews.php" class="btn btn-primary">Add News</a>
     </div>
+    <?php $statusCode = $_GET["status"] ?? "";
+        if($statusCode){
+            echo getStatuscode($statusCode);
+        }
+    ?>
     <hr>
     <table class="table table-striped">
         <thead>
@@ -95,9 +100,7 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
 
             </ul>
 
-
 </div>
-
 
 
 

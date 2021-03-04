@@ -3,14 +3,17 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
+$id = $_GET["id"] ?? "";
 
-
+$query = "SELECT * FROM news WHERE id=\"{$id}\" ";
+$result = mysqli_query($connection,$query);
+$news = mysqli_fetch_assoc($result);
 ?>
 <div class="col-md-10">
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
         <li class="breadcrumb-item"><a href="news.php">News</a></li>
-        <li class="breadcrumb-item active">Add News </li>
+        <li class="breadcrumb-item active">Update News </li>
     </ul>
     <form name="newsForm" enctype="multipart/form-data" action="functions.php" method="post">
         <h2>Update News</h2>
@@ -24,13 +27,14 @@ require_once "include/navigation.php";
             ?>
 
             <label for="newsTitle">News Title:</label>
-            <input type="text" name="newsTitle" placeholder="Title..." class="form-control" id="newsTitle">
+            <input type="text" name="newsTitle" placeholder="Title..." class="form-control" value="<?php echo $news["newsTitle"];?>" id="newsTitle">
         </div>
         <div class="form-group">
             <label for="newsDescription">News Body:</label>
-            <textarea class="form-control" name="newsDescription" placeholder="News Body..." rows="5" id="newsDescription"></textarea>
+            <textarea class="form-control" name="newsDescription"  placeholder="News Body..." rows="5" id="newsDescription"><?php echo $news["newsDescription"];?></textarea>
+            <input type="hidden" name="id" value="<?php echo $news["id"]?>" >
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="row">
                 <div class="col-6">
                     <label for="formFile" class="form-label">Upload Image</label>
@@ -52,10 +56,11 @@ require_once "include/navigation.php";
                     </select>
                 </div>
 
-            </div>
-        </div>
+            </div> 
+        </div> -->
 
         <input type="submit" name="action" value="Update" class="btn btn-primary newsSubmit ">
+        <input type="hidden" name="updateAction" value="newsUpdate" >
         <input type="submit" name="action" value="Delete" class="btn btn-danger newsSubmit ">
     </form>
 </div>
