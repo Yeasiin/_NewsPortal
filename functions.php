@@ -7,9 +7,9 @@ $updateAction = $_POST["updateAction"] ?? "";
 $statusCode = "";
 
 if ("login" == $action) {
-    $email = $_POST["email"];
+    $email = $_POST["user"];
     $password = $_POST["password"];
-    $query = "SELECT * FROM admin_login WHERE email='{$email}'";
+    $query = "SELECT * FROM admin_login WHERE email=\"{$email}\" OR name=\"{$email} \"";
     $result = mysqli_query($connection, $query);
 
     if (mysqli_num_rows($result) > 0) {
@@ -71,6 +71,7 @@ if ("login" == $action) {
     $newsTitle = htmlspecialchars($_POST["newsTitle"]);
     $newsDescription = htmlspecialchars($_POST["newsDescription"]);
     $newsCatagories = htmlspecialchars($_POST["newsCatagories"]);
+    $newsCreatedBy = htmlspecialchars($_POST["createdBy"]);
 
     $fileName = $_FILES["newsImage"]["name"];
     $fileTmp = $_FILES["newsImage"]["tmp_name"];
@@ -93,11 +94,12 @@ if ("login" == $action) {
     if (!move_uploaded_file($fileTmp, $uploadImage)) {
         $statusCode = 9;
     } else {
-        $query = "INSERT INTO news( newsTitle, newsDescription, newsCatagories, newsThumbnail ) VALUES(
+        $query = "INSERT INTO news( newsTitle, newsDescription, newsCatagories, newsThumbnail, createdBy ) VALUES(
             \"{$newsTitle}\",
             \"{$newsDescription}\",
             \"{$newsCatagories}\",
-            \"{$uploadImage}\") ";
+            \"{$uploadImage}\",
+            \"{$newsCreatedBy}\") ";
         mysqli_query($connection, $query);
         $statusCode = 10;
     };

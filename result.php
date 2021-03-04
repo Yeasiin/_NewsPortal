@@ -5,7 +5,7 @@ function getStatuscode($statusCode){
 
     $status = [
         0 => "",
-        1 => "<p class=\"text-danger\">Email is Not Correct </p>",
+        1 => "<p class=\"text-danger\">Email Id Or UserName is Not Correct </p>",
         2 => "<p class=\"text-danger\">Password is Not Correct </p>",
         7 => "<p class=\"text-danger\">Image Size Must Be Less Then 3MB </p>",
         8 => "<p class=\"text-danger\">You Can Upload Only jpg,jpeg,png,gif </p>",

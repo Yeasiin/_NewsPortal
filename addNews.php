@@ -51,6 +51,10 @@ require_once "include/navigation.php";
                         ?>
                     </select>
                 </div>
+                <div class="col-6">
+                    <label for="createdBy" class="form-label">User Name</label>
+                    <input type="text" class="form-control" name="createdBy" id="createdBy" value="<?php echo $_SESSION["name"]; ?>" disabled >
+                </div>
 
             </div>
         </div>

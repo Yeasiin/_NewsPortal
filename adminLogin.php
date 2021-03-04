@@ -38,8 +38,8 @@ if($session){
                             }
 
                         ?>
-                            <label for="email">Email address:</label>
-                            <input type="email" class="form-control" name="email" id="email">
+                            <label for="email">UserName / Email address:</label>
+                            <input type="text" class="form-control" name="user" id="email">
                         </div>
                         <div class="form-group">
                             <label for="pwd">Password:</label>
