@@ -3,6 +3,11 @@ require_once "include/header.php";
 $page = "catagories";
 require_once "include/navigation.php";
 
+ // Meta Title Set -- Hoisting
+ function headerTitle(){
+    return "Update Catagories ";
+  };
+
 $id = $_GET["id"] ?? "";
 if($id){
 

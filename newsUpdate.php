@@ -3,6 +3,11 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
+ // Meta Title Set -- Hoisting
+ function headerTitle(){
+    return "Update News ";
+  };
+
 $id = $_GET["id"] ?? "";
 
 $query = "SELECT * FROM news WHERE id=\"{$id}\" ";

@@ -3,6 +3,11 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
+ // Meta Title Set -- Hoisting
+ function headerTitle(){
+    return "Dashboard - News";
+  };
+
 $pagination = $_GET["id"] ?? 0;
 $paginationId = $_GET["id"] ?? 0;
 

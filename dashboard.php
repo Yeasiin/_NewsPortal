@@ -1,7 +1,12 @@
 <?php
   require_once "include/header.php"; 
   $page = "dashboard";
-  require_once "include/navigation.php"
+  require_once "include/navigation.php";
+  
+ // Meta Title Set -- Hoisting
+  function headerTitle(){
+    return "Dashboard ";
+  };
 
 ?>
 

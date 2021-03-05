@@ -19,8 +19,7 @@ if (!$session) {
   <meta name="author" content="">
   <link rel="shortcut icon" href="https://s2.logaster.com/static/v3/favicons/manifest/favicon.ico" type="image/x-icon">
 
-  <title>Dashboard</title>
+  <title><?php echo headerTitle(); ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.min.css">
 </head>
-

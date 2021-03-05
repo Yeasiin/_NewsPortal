@@ -3,6 +3,10 @@ require_once "include/header.php";
 $page = "news";
 require_once "include/navigation.php";
 
+ // Meta Title Set -- Hoisting
+ function headerTitle(){
+    return "Add News";
+  };
 
 
 ?>

@@ -3,6 +3,11 @@ require_once "include/header.php";
 $page = "catagories";
 require_once "include/navigation.php";
 
+ // Meta Title Set -- Hoisting
+ function headerTitle(){
+    return "Dashboard - Catagories ";
+  };
+
 $query = "SELECT * FROM catagories ORDER BY id DESC";
 $result = mysqli_query($connection, $query);
 ?>

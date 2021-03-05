@@ -2,6 +2,10 @@
   require_once ("include/header.php");
   require_once ("include/blogNavigation.php");
 
+  // Meta Title Set -- Hoisting
+  function headerTitle(){
+    return "News Portal";
+  };
 ?>
 
 
