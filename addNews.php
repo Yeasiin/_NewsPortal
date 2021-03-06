@@ -8,7 +8,6 @@ require_once "include/navigation.php";
     return "Add News";
   };
 
-
 ?>
 <div class="col-md-10">
     <ul class="breadcrumb">
@@ -57,8 +56,8 @@ require_once "include/navigation.php";
                 </div>
                 
                 <div class="col-6 ">
-                    <label for="createdBy" class="form-label">User Name</label>
-                    <input type="text" class="form-control" name="createdBy" id="createdBy" value="<?php echo $_SESSION["name"]; ?>" disabled >
+                    <label class="form-label">User Name</label>
+                    <input type="text" class="form-control" name="createdBy" value="<?php echo $_SESSION["name"];?>" readonly >
                 </div>
 
             </div>
