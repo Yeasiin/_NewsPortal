@@ -69,6 +69,7 @@ if ($pagination == 0 || $pagination == 1) {
       </h3>
 
       <?php
+      $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
       $query = "SELECT * FROM news ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
       $result = mysqli_query($connection, $query);
 
@@ -96,7 +97,7 @@ if ($pagination == 0 || $pagination == 1) {
         <ul class="pagination">
           <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="index.php?id=<?php echo $paginationId - 1; ?>" class="page-link ">Previous</a></li>
           <?php
-          $totalPagination = ceil(mysqli_num_rows($result) / 4);
+          $totalPagination = ceil(mysqli_num_rows($paginationQuery) / 4);
           for ($i = 1; $i <= $totalPagination; $i++) :
           ?>
 
