@@ -4,13 +4,15 @@ require_once "include/blogNavigation.php";
 
 $blogId = $_GET["id"] ?? "";
 
+function headerTitle(){
+    return "News";
+  };
 
 $query = "SELECT * FROM news WHERE id=\"{$blogId}\" ";
 $result = mysqli_query($connection, $query);
 $indexNews = mysqli_fetch_assoc($result);
 
 ?>
-
 
 <div class="blog-post">
           <h2 class="blog-post-title"><?php echo $indexNews["newsTitle"]; ?></h2>
@@ -41,8 +43,3 @@ $indexNews = mysqli_fetch_assoc($result);
 </body>
 
 </html>
-<?php
-function headerTitle(){
-    
-}
-?>

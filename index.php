@@ -30,34 +30,27 @@ if ($pagination == 0 || $pagination == 1) {
 </div>
 
 <div class="row mb-2">
+<?php 
+$featuredNews = mysqli_query($connection, "SELECT * FROM news ORDER BY createdAt DESC LIMIT 2");
+while($featuredNew = mysqli_fetch_assoc($featuredNews)):
+
+?>
   <div class="col-md-6">
     <div class="card flex-md-row mb-4 box-shadow h-md-250">
-      <div class="card-body d-flex flex-column align-items-start">
-        <strong class="d-inline-block mb-2 text-primary">World</strong>
+      <div class="card-body d-flex flex-column align-items-start" style="background-image:linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(19,19,19,0.4) 100%), url(<?php echo $featuredNew["newsThumbnail"] ?>);background-size:cover;" >
+        <strong class="d-inline-block mb-2 text-warning"><?php echo $featuredNew["newsCatagories"];?></strong>
         <h3 class="mb-0">
-          <a class="text-dark" href="#">Featured post</a>
+          <a class="text-white" href="#"><?php echo $featuredNew["newsTitle"]; ?></a>
         </h3>
-        <div class="mb-1 text-muted">Nov 12</div>
-        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-        <a href="#">Continue reading</a>
+        <div class="mb-1 text-white"><?php echo date("M j",strtotime($featuredNew["createdAt"]))?></div>
+        
+        <a class="text-warning font-weight-bold" href="singleNews.php?id=<?php echo $featuredNew["id"] ?>">Continue reading</a>
       </div>
-      <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-      <div class="card-body d-flex flex-column align-items-start">
-        <strong class="d-inline-block mb-2 text-success">Design</strong>
-        <h3 class="mb-0">
-          <a class="text-dark" href="#">Post title</a>
-        </h3>
-        <div class="mb-1 text-muted">Nov 11</div>
-        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-        <a href="#">Continue reading</a>
-      </div>
-      <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-    </div>
-  </div>
+  <?php endwhile; ?>
+
 </div>
 </div>
 
@@ -119,20 +112,16 @@ if ($pagination == 0 || $pagination == 1) {
       </div>
 
       <div class="p-3">
-        <h4 class="font-italic">Archives</h4>
+        <h4 class="font-italic">Catagories</h4>
+        <hr>
         <ol class="list-unstyled mb-0">
-          <li><a href="#">March 2014</a></li>
-          <li><a href="#">February 2014</a></li>
-          <li><a href="#">January 2014</a></li>
-          <li><a href="#">December 2013</a></li>
-          <li><a href="#">November 2013</a></li>
-          <li><a href="#">October 2013</a></li>
-          <li><a href="#">September 2013</a></li>
-          <li><a href="#">August 2013</a></li>
-          <li><a href="#">July 2013</a></li>
-          <li><a href="#">June 2013</a></li>
-          <li><a href="#">May 2013</a></li>
-          <li><a href="#">April 2013</a></li>
+          <?php
+          $query= "SELECT * FROM catagories";
+          $result = mysqli_query($connection, $query);
+          while($catagorie = mysqli_fetch_assoc($result)):
+          ?>
+          <li><a href="#"><?php echo $catagorie["catagories_name"] ?></a></li>
+          <?php endwhile; ?>
         </ol>
       </div>
 
