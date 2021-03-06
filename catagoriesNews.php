@@ -7,7 +7,7 @@ function headerTitle()
 {
   return "News Portal";
 };
-
+$sortBy = $_GET["sortBy"] ?? "";
 $pagination = $_GET["id"] ?? 0;
 $paginationId = $_GET["id"] ?? 0;
 
@@ -17,54 +17,26 @@ if ($pagination == 0 || $pagination == 1) {
   $pagination = ($pagination * 4) - 4;
 }
 
+$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" ");
+$query = "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+$result = mysqli_query($connection, $query);
 
 ?>
 
 
-<div class="jumbotron p-3 p-md-5 text-white custom-image rounded bg-dark">
-  <div class="col-md-6 px-0">
-    <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-    <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
-    <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
-  </div>
-</div>
 
-<div class="row mb-2">
-<?php 
-$featuredNews = mysqli_query($connection, "SELECT * FROM news ORDER BY createdAt DESC LIMIT 2");
-while($featuredNew = mysqli_fetch_assoc($featuredNews)):
 
-?>
-  <div class="col-md-6">
-    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-      <div class="card-body d-flex flex-column align-items-start" style="background-image:linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(19,19,19,0.4) 100%), url(<?php echo $featuredNew["newsThumbnail"] ?>);background-size:cover;" >
-        <strong class="d-inline-block mb-2 text-warning"><?php echo $featuredNew["newsCatagories"];?></strong>
-        <h3 class="mb-0">
-          <a class="text-white" href="#"><?php echo $featuredNew["newsTitle"]; ?></a>
-        </h3>
-        <div class="mb-1 text-white"><?php echo date("M j",strtotime($featuredNew["createdAt"]))?></div>
-        
-        <a class="text-warning font-weight-bold" href="singleNews.php?id=<?php echo $featuredNew["id"] ?>">Continue reading</a>
-      </div>
-
-    </div>
-  </div>
-  <?php endwhile; ?>
-
-</div>
 </div>
 
 <main role="main" class="container">
   <div class="row">
     <div class="col-md-8 blog-main">
       <h3 class="pb-3 mb-4 font-italic border-bottom">
-        From the Firehose
+        Sort By Catagories
       </h3>
 
       <?php
-      $paginationQuery = mysqli_query($connection, "SELECT * FROM news");
-      $query = "SELECT * FROM news ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
-      $result = mysqli_query($connection, $query);
+
 
       while ($indexNews = mysqli_fetch_assoc($result)) {
 
@@ -86,7 +58,8 @@ while($featuredNew = mysqli_fetch_assoc($featuredNews)):
       }
       ?>
 
-<?php if(mysqli_num_rows($paginationQuery) > 4){ ?>
+
+      <?php if(mysqli_num_rows($paginationQuery) > 5){ ?>
         <ul class="pagination">
           <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="index.php?id=<?php echo $paginationId - 1; ?>" class="page-link ">Previous</a></li>
           <?php
@@ -99,6 +72,7 @@ while($featuredNew = mysqli_fetch_assoc($featuredNews)):
           endfor;
           ?>
           <li class="page-item <?php echo $paginationId < $totalPagination ? "" : "disabled"; ?> "><a href="index.php?id=<?php echo $paginationId + 1; ?>" class="page-link btn btn-outline-primary">Next</a></li>
+
         </ul>
         <?php } ?>
 

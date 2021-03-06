@@ -22,12 +22,12 @@
           <a class="p-2 text-muted" href="index.php">Home</a>
           <?php 
             $query = "SELECT catagories_name FROM catagories ORDER BY id LIMIT 6 ";
-            $result = mysqli_query($connection, $query);
+            $catagoreisNews = mysqli_query($connection, $query);
 
-            while($catagorie = mysqli_fetch_assoc($result)){
+            while($catagorie = mysqli_fetch_assoc($catagoreisNews)){
           
           ?>
-          <a class="p-2 text-muted" href="#"><?php echo $catagorie["catagories_name"] ?></a>
+          <a class="p-2 text-muted" href="catagoriesNews.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a>
           <?php
           };
           ?>
