@@ -8,6 +8,7 @@ function headerTitle()
   return "News Portal";
 };
 $sortBy = $_GET["sortBy"] ?? "";
+$search = $_POST["search"] ?? "";
 $pagination = $_GET["id"] ?? 0;
 $paginationId = $_GET["id"] ?? 0;
 
@@ -17,8 +18,9 @@ if ($pagination == 0 || $pagination == 1) {
   $pagination = ($pagination * 4) - 4;
 }
 
-$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" ");
-$query = "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" OR newsTitle LIKE \"%{$search}%\" ");
+$query = "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" OR newsTitle LIKE \"%{$search}%\" ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+
 $result = mysqli_query($connection, $query);
 
 ?>
@@ -67,7 +69,7 @@ $result = mysqli_query($connection, $query);
           for ($i = 1; $i <= $totalPagination; $i++) :
           ?>
 
-            <li class="page-item"><a href="index.php?id=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a></li>
+            <li class="page-item"><a href="newsPages.php?id=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a></li>
           <?php
           endfor;
           ?>
@@ -94,7 +96,7 @@ $result = mysqli_query($connection, $query);
           $result = mysqli_query($connection, $query);
           while($catagorie = mysqli_fetch_assoc($result)):
           ?>
-          <li><a href="catagoriesNews.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
+          <li><a href="newsPages.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
           <?php endwhile; ?>
         </ol>
       </div>

@@ -120,7 +120,7 @@ while($featuredNew = mysqli_fetch_assoc($featuredNews)):
           $result = mysqli_query($connection, $query);
           while($catagorie = mysqli_fetch_assoc($result)):
           ?>
-          <li><a href="catagoriesNews.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
+          <li><a href="newsPages.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
           <?php endwhile; ?>
         </ol>
       </div>
