@@ -18,7 +18,7 @@ if ("login" == $action) {
         if (password_verify($password, $_password)) {
             $_SESSION["id"] = $data["id"];
             $_SESSION["name"] = $data["name"];
-            header("location:dashboard.php");
+            header("location:news.php");
             die();
         } else {
             $statusCode = 2;

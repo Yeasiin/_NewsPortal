@@ -75,7 +75,7 @@ $paginationQuery = mysqli_query($connection, "SELECT * FROM message");
                             ?></td>
                         <td style="vertical-align:middle">
                         <form action="functions.php" method="POST" >
-                            <input type="hidden" name="action" name="messageDelete" >
+                            <input type="hidden" name="action" value="messageDelete" >
                             <input type="hidden" name="messageId" value="<?php echo $message["id"] ?>" >
                             <input type="submit" class="btn btn-danger" value="Delete">
                         </form>

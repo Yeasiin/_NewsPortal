@@ -17,12 +17,12 @@ if ($pagination == 0 || $pagination == 1) {
 } else {
   $pagination = ($pagination * 4) - 4;
 }
-if($sortBy){
-$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ");
-$query = "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
-}elseif($search){
+if ($sortBy) {
+  $paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ");
+  $query = "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+} elseif ($search) {
   $paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE (newsTitle LIKE '%{$search}%')  ");
-$query = "SELECT * FROM news WHERE (newsTitle LIKE '%{$search}%')  ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+  $query = "SELECT * FROM news WHERE (newsTitle LIKE '%{$search}%')  ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
 }
 
 $result = mysqli_query($connection, $query);
@@ -65,7 +65,7 @@ $result = mysqli_query($connection, $query);
       ?>
 
 
-      <?php if(mysqli_num_rows($paginationQuery) > 5){ ?>
+      <?php if (mysqli_num_rows($paginationQuery) > 5) { ?>
         <ul class="pagination">
           <li class="page-item <?php echo $pagination > 1 ? "" : "disabled"; ?>"><a href="index.php?id=<?php echo $paginationId - 1; ?>" class="page-link ">Previous</a></li>
           <?php
@@ -80,7 +80,7 @@ $result = mysqli_query($connection, $query);
           <li class="page-item <?php echo $paginationId < $totalPagination ? "" : "disabled"; ?> "><a href="index.php?id=<?php echo $paginationId + 1; ?>" class="page-link btn btn-outline-primary">Next</a></li>
 
         </ul>
-        <?php } ?>
+      <?php } ?>
 
 
     </div><!-- /.blog-main -->
@@ -96,11 +96,11 @@ $result = mysqli_query($connection, $query);
         <hr>
         <ol class="list-unstyled mb-0">
           <?php
-          $query= "SELECT * FROM catagories";
+          $query = "SELECT * FROM catagories";
           $result = mysqli_query($connection, $query);
-          while($catagorie = mysqli_fetch_assoc($result)):
+          while ($catagorie = mysqli_fetch_assoc($result)) :
           ?>
-          <li><a href="newsPages.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
+            <li><a href="newsPages.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a></li>
           <?php endwhile; ?>
         </ol>
       </div>
