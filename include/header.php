@@ -2,10 +2,6 @@
 require_once "DB/config.php";
 include_once "result.php";
 session_start();
-$session = $_SESSION["id"] ?? "";
-if (!$session) {
-  header("location:adminLogin.php");
-}
 
 ?>
 

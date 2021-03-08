@@ -17,9 +17,13 @@ if ($pagination == 0 || $pagination == 1) {
 } else {
   $pagination = ($pagination * 4) - 4;
 }
-
-$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" OR newsTitle LIKE \"%{$search}%\" ");
-$query = "SELECT * FROM news WHERE newsCatagories=\"{$sortBy}\" OR newsTitle LIKE \"%{$search}%\" ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+if($sortBy){
+$paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ");
+$query = "SELECT * FROM news WHERE (newsCatagories='{$sortBy}') ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+}elseif($search){
+  $paginationQuery = mysqli_query($connection, "SELECT * FROM news WHERE (newsTitle LIKE '%{$search}%')  ");
+$query = "SELECT * FROM news WHERE (newsTitle LIKE '%{$search}%')  ORDER BY createdAt DESC LIMIT {$pagination}, 4 ";
+}
 
 $result = mysqli_query($connection, $query);
 
