@@ -8,7 +8,7 @@ function headerTitle()
   return "News Portal";
 };
 $sortBy = $_GET["sortBy"] ?? "";
-$search = $_POST["search"] ?? "";
+$search = $_GET["search"] ?? "";
 $pagination = $_GET["id"] ?? 0;
 $paginationId = $_GET["id"] ?? 0;
 

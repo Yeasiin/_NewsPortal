@@ -9,7 +9,7 @@
           <a class="blog-header-logo text-dark" href="#">News Portal</a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <form action="newsPages.php" method="post">
+          <form action="newsPages.php" method="GET">
           <div class="input-group">
             <input type="search" value="" class="form-control rounded" placeholder="Search" aria-label="Search" name="search"  aria-describedby="search-addon" />
             <input type="submit" class="btn btn-outline-primary" value="Search" >
@@ -25,14 +25,15 @@
         <?php
         $query = "SELECT catagories_name FROM catagories ORDER BY id LIMIT 6 ";
         $catagoreisNews = mysqli_query($connection, $query);
-
+        
         while ($catagorie = mysqli_fetch_assoc($catagoreisNews)) {
-
-        ?>
+          
+          ?>
           <a class="p-2 text-muted" href="newsPages.php?sortBy=<?php echo $catagorie["catagories_name"] ?>"><?php echo $catagorie["catagories_name"] ?></a>
         <?php
         };
         ?>
+        <a class="p-2 text-muted" href="contact.php">Contact</a>
 
       </nav>
     </div>

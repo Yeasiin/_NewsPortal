@@ -135,4 +135,19 @@ if ("login" == $action) {
         $statusCode = 12;
     }
     header("location:news.php?status={$statusCode}");
+}elseif("messages" == $action  ){
+    $name = htmlspecialchars($_POST["fullName"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $message = htmlspecialchars($_POST["contactMessage"]);
+
+    $query = "INSERT INTO message( name, email, message) VALUES ( \"{$name}\", \"{$email}\", \"{$message}\") ";
+    $result = mysqli_query($connection, $query);
+
+    if(mysqli_connect_errno()){
+        $statusCode = 17;
+    }else{
+        $statusCode = 16;
+
+    }
+    header("location: contact.php?status={$statusCode}");
 };

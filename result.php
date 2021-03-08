@@ -16,6 +16,8 @@ function getStatuscode($statusCode){
         13 => "<p class=\"text-success\"> Catagories Added Successfully </p>",
         14 => "<p class=\"text-success\"> Catagories Updated Successfully </p>",
         15 => "<p class=\"text-success\"> Catagories Delete Successfully </p>",
+        16 => "<p class=\"text-success\"> Message Successfully Send </p>",
+        17 => "<p class=\"text-danger\"> Failed To Send Message </p>",
     ];
 
     return $status[$statusCode];
