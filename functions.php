@@ -150,4 +150,18 @@ if ("login" == $action) {
 
     }
     header("location: contact.php?status={$statusCode}");
+}elseif("messageDelete" == $action ){
+    $messageId = htmlspecialchars($_POST["messageId"]);
+
+    $query = "DELETE FROM message WHERE id = \"{$messageId}\" ";
+    mysqli_query($connection, $query);
+    if(mysqli_connect_errno()){
+        $statusCode = 18;
+        echo "now Okay";
+    }else{
+        $statusCode = 19;
+    }
+    echo "okay";
+    header("location: messages.php?status={$statusCode}");
+
 };

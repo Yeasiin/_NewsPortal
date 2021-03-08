@@ -33,9 +33,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link <?php echo $page == "messages" ? "active" : "";  ?>" href="messages.php">
                 <span data-feather="users"></span>
-                Customers
+                Messages
               </a>
             </li>
             <li class="nav-item">

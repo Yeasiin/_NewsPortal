@@ -12,6 +12,10 @@ html {
           box-sizing: border-box;
 }
 
+body {
+  top: 0 !important;
+}
+
 .pl-15 {
   padding-left: 15px;
 }
@@ -261,5 +265,13 @@ h1, h2, h3, h4, h5, h6 {
 
 form[name="contact"] {
   margin-top: 2rem;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-gadget-icon {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

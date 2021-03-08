@@ -3,6 +3,8 @@
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+ 
+    <!-- Main JavaScript File -->
     <script src="js/app.js"></script>
 
   </body>
